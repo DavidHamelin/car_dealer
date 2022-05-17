@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+
+{% block body %}
+
+	<div class="text-center container col-lg-5 col-md-12">
+		<h1>Hello
+			{{ userFirstName }}!</h1>
+		<p>Listes des voitures disponibles :</p>
+
+		<ul class="text-left list-group">
+			<li class="list-group-item">Marque :
+				{{ cars.brand }}</li>
+			<li class="list-group-item">Modèle :
+				{{ cars.model }}</li>
+			<li class="list-group-item">Année :
+				{{ cars.year }}</li>
+			<li class="list-group-item">Moteur :
+				{{ cars.engine }}</li>
+			<li class="list-group-item">Couleur :
+				{{ cars.color }}</li>
+			<li class="list-group-item">Energy :
+				{% for energy in cars.getEnergyOptions() %}
+					{{ energy.name }}
+					{% if not loop.last %}|
+					{% endif %}
+				{% endfor %}
+			</li>
+			<li class="list-group-item">Nombre de KM :
+				{{ cars.km }}</li>
+				<li class="list-group-item">Places :
+					{{ cars.getSeat().quantity }}</li>
+					<li class="list-group-item">Type de vente :
+						{{ cars.getTypeOfSale().name }}</li>
+				
+		</ul>
+
+		<a class="btn btn-secondary" href="{{ path('car') }}">Return to Cars List</a>
+		<br>
+
+	</div>
+{% endblock %}

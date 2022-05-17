@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Car{% endblock %}
+
+{% block body %}
+    <h1>Edit Car</h1>
+
+	{{ include('admin/forms/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <div class="d-flex justify-content-between">
+    <a class="btn btn-secondary" href="{{ path('app_admin_car') }}">Return to Cars List</a>
+
+    {{ include('admin/forms/_delete_form.html.twig') }}
+</div>
+    
+{% endblock %}

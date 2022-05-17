@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login Page!
+{% endblock %}
+
+{% block body %}
+
+	<style>
+		/* Alert bootstrap */
+		.alert {
+			position: fixed;
+			left: 2em;
+			bottom: 1em;
+			z-index: 9999;
+		}
+	</style>
+	{# read and display just one flash message type #}
+	{% for message in app.flashes('Success') %}
+		<div class="flash-notice alert alert-success" role="alert">
+			{{ message }}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
+
+	<article class="container text-center ">
+		<a class="btn btn-primary m-5" href="{{ path('app_user_new')}}">
+			<i class="fas fa-user-plus"></i>
+			Register user</a>
+
+	</article>
+
+
+{% endblock %}

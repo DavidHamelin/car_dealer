@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+
+{% block body %}
+
+	<div class="text-center container">
+		<h1>Hello
+			{{ userFirstName }}!</h1>
+
+
+
+			{{ form_start(form) }}
+
+			{{ form_widget(form, {'attr': {'class': 'd-flex justify-content-center align-items-center'}} ) }}
+
+			<button class="btn btn-success">{{ button_label|default('Search') }}</button>
+			<a class="btn btn-secondary" href="{{ path('car')}}">{{ button_label|default('Select All') }}</a>
+			{{ form_end(form) }}
+	
+
+
+		<p>{{ searchTitle }}</p>
+
+		<table class="table table-hover table-sm table-light">
+			<thead>
+				<tr>
+					<th>Marque</th>
+					<th>Modèle</th>
+					<th>Année</th>
+					<th>Moteur</th>
+					<th>Couleur</th>
+					<th>Energie</th>
+					<th>KM</th>
+					<th>Places</th>
+					<th>Type de vente</th>
+
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for car in cars %}
+					<tr>
+						<td>{{ car.brand }}</td>
+						<td>{{ car.model }}</td>
+						<td>{{ car.year }}</td>
+						<td>{{ car.engine }}</td>
+						<td>{{ car.color }}</td>
+						<td>
+							{% for energy in car.getEnergyOptions() %}
+
+								{{ energy.name }}
+								{% if not loop.last %}|
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>{{ car.km }}</td>
+						<td>{{ car.getSeat().quantity }}</td>
+						<td>{{ car.getTypeOfSale().name }}</td>
+				
+						<td>
+							<a class="btn btn-sm btn-outline-secondary" href="{{ path('car_details', {id: car.id, slug: car.slug}) }}">Details</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<br>
+
+	</div>
+{% endblock %}

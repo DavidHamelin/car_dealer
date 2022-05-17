@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EnergyOption{% endblock %}
+
+{% block body %}
+    <h1>Create new EnergyOption</h1>
+
+    {{ include('energy_option/_form.html.twig') }}
+
+    <a href="{{ path('app_energy_option_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New User{% endblock %}
+
+{% block body %}
+    <h1>New User</h1>
+
+    {{ include('user/forms/_form.html.twig') }}
+
+    <a class="btn btn-light" href="{{ path('app_user') }}">Return to login page</a>
+{% endblock %}

@@ -1,3 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+   path: /
+   controller: App\Controller\CarController::index
+
+logout: 
+    path: /logout
+    methods: GET
+

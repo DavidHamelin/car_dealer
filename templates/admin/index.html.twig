@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration des véhicules
+{% endblock %}
+
+{% block body %}
+
+	<style>
+		/* Alert bootstrap */
+		.alert {
+			position: fixed;
+			left: 2em;
+			bottom: 1em;
+			z-index: 9999;
+		}
+	</style>
+	{# read and display just one flash message type #}
+	{% for message in app.flashes('Success') %}
+		<div class="flash-notice alert alert-success" role="alert">
+			{{ message }}
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
+
+	<div class="text-center container">
+		<h3 class="m-1 p-1 border border-dark d-inline-block border-3">Administration des véhicules</h3>
+		<br>
+
+		{{ form_start(form, {'attr': {'class': 'border py-1 px-2 d-inline-block bg-light'}}
+		) }}
+
+		{{ form_widget(form, {'attr': {'class': 'd-flex justify-content-center align-items-center'}}
+		) }}
+
+		<button class="btn btn-sm btn-success">{{ button_label|default('Search') }}</button>
+		<a class="btn btn-sm btn-secondary" href="{{ path('car')}}">{{ button_label|default('Select All') }}</a>
+		{{ form_end(form) }}
+
+		<div class="d-flex justify-content-between align-items-center">
+			<h5>{{ searchTitle }}</h5>
+			<div>
+				<a class="btn btn-sm btn-primary" href="{{ path('admin_new_car')}}">
+					<i class="fas fa-plus"></i>
+					New Car
+				</a>
+				<a class="btn btn-sm btn-secondary" href="{{ path('app_type_of_sale_index')}}">
+					<i class="fas fa-plus"></i>
+					New Type of Sale
+				</a>
+			</div>
+
+		</div>
+
+		<div class="table-responsive">
+			<table class="table table-hover table-sm table-light table-striped table-sm">
+				<thead>
+					<tr>
+						<th>Image</th>
+						<th>Marque</th>
+						<th>Modèle</th>
+						<th>Année</th>
+						<th>Moteur</th>
+						<th>Couleur</th>
+						<th>Energie</th>
+						<th>KM</th>
+						<th>Places</th>
+						<th>Type de vente</th>
+						<th></th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for car in cars %}
+						<tr>
+							<td>
+								{% if car.image is not empty %}
+									<img src="{{ img_path ~ car.image }}" alt="img {{ car.brand }}" height="100em">
+								{% endif %}
+
+							</td>
+							<td>{{ car.brand }}</td>
+							<td>{{ car.model }}</td>
+							<td>{{ car.year }}</td>
+							<td>{{ car.engine }}</td>
+							<td>{{ car.color }}</td>
+							<td>
+								{% for energy in car.getEnergyOptions() %}
+
+									{{ energy.name }}
+									{% if not loop.last %}|
+									{% endif %}
+								{% endfor %}
+							</td>
+							<td>{{ car.km }}</td>
+							<td>{{ car.getSeat().quantity }}</td>
+
+							{% set value = car.getTypeOfSale().name %}
+
+							{% if value == 'Location' %}
+
+							<td><i class="fas fa-cart-shopping"></i></td>
+							{% elseif value == 'Vente' %}
+							<td><i class="fas fa-money-bill-wave"></i></td>
+							{% else %}
+							<td><i class="fas fa-clock"></i></td>
+							{% endif %}
+
+
+							
+
+							<td>
+								<a class="btn btn-sm btn-outline-secondary" href="{{ path('car_details', {id: car.id, slug: car.slug}) }}">
+									<i class="fas fa-list"></i>
+									Details</a>
+							</td>
+							<td>
+								<a class="btn btn-sm btn-secondary" href="{{ path('app_admin_car_edit', {id: car.id}) }}" title="Modify this car">
+									<i class="fas fa-edit"></i>
+								</a>
+							</td>
+							<td>
+								{# <a class="btn btn-sm btn-danger" href="{{ path('app_admin_car_delete', {id: car.id}) }}" title="Remove this car">
+																																									<i class="fas fa-remove"></i>
+																																								</a> #}
+								{{ include('admin/forms/_delete_form.html.twig') }}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<br>
+
+	</div>
+
+
+{% endblock %}
